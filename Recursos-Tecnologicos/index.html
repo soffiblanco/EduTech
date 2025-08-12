@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Recursos Tecnológicos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Paleta tropical */
+      --blue: #7F95E4;
+      --teal: #1AC1B9;
+      --gold: #FBD160;
+      --pink-strong: #F9447F;
+      /* Bright Barbie */
+      --orange: #FF8017;
+      /* Clementine Hobby */
+      --lime: #C3F73A;
+      /* reemplazo del rosa suave */
+
+      /* Neutrales */
+      --bg: #F9FAFC;
+      --paper: #ffffff;
+      --sidebar: #ECEFF3;
+      /* gris claro del sidebar */
+      --text: #1F2937;
+      --muted: #6B7280;
+      --shadow: 0 12px 30px rgba(16, 24, 40, .08), 0 4px 8px rgba(16, 24, 40, .06);
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      height: auto;
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      display: flex;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* Faja corinto que SIEMPRE cubre toda la altura al lado izquierdo */
+    body::before{
+      content: "";
+      position: fixed;
+      inset: 0 auto 0 0;   /* top:0; bottom:0; left:0 */
+      width: 280px;        /* igual al ancho de la 1ª columna del grid (.app) */
+      background: #76232f; /* corinto */
+      z-index: -1;         /* detrás del contenido */
+    }
+
+
+
+
+    /* Layout */
+    .app {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+      height: auto;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: .2px;
+      font-size: 1.15rem;
+      margin-bottom: 18px;
+    }
+
+    .level-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      margin: 10px 0;
+      border-radius: 12px;
+      background: #fff;
+      border: 2px solid transparent;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: .25s ease;
+    }
+
+    .level-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .level-btn.active {
+      border-color: var(--blue)
+    }
+
+    .pill {
+      font-size: .75rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, .06);
+    }
+
+    main {
+      padding: 28px 34px;
+      position: relative;
+      overflow: visible;
+      /* antes: hidden (cortaba contenido) */
+    }
+
+    /* Header simple */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+
+    .title {
+      font-weight: 800;
+      font-size: 1.6rem
+    }
+
+    .subtitle {
+      color: var(--muted)
+    }
+
+    /* Grid de materias */
+    .subjects {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    /* Sidebar que siempre cubre el alto visible */
+    aside{
+      position: sticky;    /* se pega al top mientras haces scroll */
+      top: 0;
+      align-self: start;   /* necesario dentro del grid */
+      height: 100vh;       /* siempre la altura del viewport */
+      background: #76232f;
+      color: #ffffff;
+      padding: 24px;
+      border-right: 1px solid rgba(0,0,0,.04);
+    }
+
+
+
+    @media (max-width:1200px) {
+      .subjects {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width:720px) {
+      .subjects {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width:480px) {
+      .subjects {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      position: relative;
+      background: var(--paper);
+      border-radius: 22px;
+      padding: 50px;
+      min-height: 200px;
+      min-width: 200px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(16, 24, 40, .12)
+    }
+
+    .card h3 {
+      margin: 0 0 6px;
+      font-size: 1.1rem
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .9rem
+    }
+
+    .badge {
+      position: absolute;
+      right: 14px;
+      top: 14px;
+      font-size: .72rem;
+      background: rgba(255, 255, 255, .9);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    .corner {
+      position: absolute;
+      inset: auto -30px -30px auto;
+      width: 160px;
+      height: 160px;
+      opacity: .15;
+      border-radius: 30px;
+      transform: rotate(-18deg);
+      background: #fff;
+    }
+
+    /* Colores por materia */
+    .matematicas {
+      background: linear-gradient(135deg, var(--blue), #A7B4F0);
+      color: #000000
+    }
+
+    .ciencias {
+      background: linear-gradient(135deg, var(--teal), #59E0D7);
+      color: #000000
+    }
+
+    .espanol {
+      background: linear-gradient(135deg, var(--gold), #FFE59B);
+      color: #000000
+    }
+
+    .sociales {
+      background: linear-gradient(135deg, var(--pink-strong), #FF77A3);
+      color: #000000
+    }
+
+    .ingles {
+      background: linear-gradient(135deg, var(--lime), #E3FFA8);
+      color: #000000
+    }
+
+    .arte {
+      background: linear-gradient(135deg, var(--orange), #FFB36F);
+      color: #000000
+    }
+
+    .musica {
+      background: linear-gradient(135deg, #9C7AE5, #C8B3FF);
+      color: #000000
+    }
+
+    /* ===== FOLDER (panel) ===== */
+    .folder {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      top: 90px;
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      transform-origin: top center;
+      transform: scaleY(0.92) translateY(-16px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform .35s cubic-bezier(.2, .7, .2, 1), opacity .35s ease;
+      overflow: hidden;
+      background-color: var(--folder-bg, var(--paper));
+      /* color SUAVE del folder */
+    }
+
+    .folder.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scaleY(1) translateY(0)
+    }
+
+    .folder-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 22px;
+      background: transparent;
+      position: relative;
+      z-index: 2;
+    }
+
+    .folder-title {
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: .2px;
+    }
+
+    .folder-level {
+      margin-left: auto;
+      font-size: .85rem;
+      color: #000;
+      opacity: .7
+    }
+
+    .folder-close {
+      border: none;
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      background: #fff;
+    }
+
+    .folder-top-curve {
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 84px;
+      border-bottom-left-radius: 28px;
+      border-bottom-right-radius: 28px;
+      opacity: .98;
+      background-color: var(--folder-header, var(--paper));
+      /* color FUERTE arriba */
+    }
+
+    /* Recursos en lista VERTICAL */
+    .resources {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 50px 22px 22px;
+      /* espacio para la banda de color */
+      overflow: visible;
+    }
+
+    .resource {
+      width: 100%;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 18px 18px 14px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .resource .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, .06);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+
+    .resource h4 {
+      margin: 0 0 6px;
+      font-size: 1rem
+    }
+
+    .resource p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: .92rem
+    }
+
+    .resource a {
+      display: inline-block;
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 2px solid currentColor;
+      padding-bottom: 2px;
+    }
+
+    /* Helpers */
+    .hidden {
+      display: none
+    }
+
+    .spacer {
+      height: 320px
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px; /* espacio entre logo y texto */
+      font-weight: 800;
+      letter-spacing: .2px;
+      font-size: 1.15rem;
+      margin-bottom: 18px;
+    }
+
+    .brand-logo {
+      width: 28px;   /* ajusta tamaño según necesites */
+      height: 28px;
+      object-fit: contain; /* para que no se deforme */
+    }
+
+
+    /* espacio para poder ver folder flotante */
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside>
+      <div class="brand">
+        <img src="EscudoUnis.png" alt="Logo EdUNIS" class="brand-logo">
+        <span class="title-1">EDUTECH</span>
+      </div>
+      <h5>Niveles</h5>
+      <button class="level-btn active" data-level="preprimaria">
+        <span class="pill">3–5 años</span><strong>Preprimaria</strong>
+      </button>
+      <button class="level-btn" data-level="primaria">
+        <span class="pill">6–11 años</span><strong>Primaria</strong>
+      </button>
+      <button class="level-btn" data-level="basicos">
+        <span class="pill">12–18 años</span><strong>Básicos y Diversificado</strong>
+      </button>
+    </aside>
+
+    <!-- Main -->
+    <main>
+      <div class="topbar">
+        <div>
+          <div class="title">Recursos Tecnológicos</div>
+          <div class="subtitle">Selecciona una materia para ver los recursos del nivel elegido.</div>
+        </div>
+      </div>
+
+      <!-- Grid de materias -->
+      <section id="subjects" class="subjects">
+        <article class="card matematicas" data-subject="Matemáticas" data-color="var(--blue)">
+          <span class="badge">+ recursos</span>
+          <div class="corner"></div>
+          <h3>Matemáticas</h3>
+          <p>Juegos, prácticas y evaluaciones.</p>
+        </article>
+
+        <article class="card ciencias" data-subject="Ciencias Naturales" data-color="var(--teal)">
+          <span class="badge">+ recursos</span>
+          <div class="corner"></div>
+          <h3>Ciencias</h3>
+          <p>Experimentos, simulaciones y ciencia divertida.</p>
+        </article>
+
+        <article class="card espanol" data-subject="Español" data-color="var(--gold)">
+          <span class="badge">+ recursos</span>
+          <div class="corner"></div>
+          <h3>Español</h3>
+          <p>Lectoescritura, gramática y vocabulario.</p>
+        </article>
+
+        <article class="card sociales" data-subject="Ciencias Sociales" data-color="var(--pink-strong)">
+          <span class="badge">+ recursos</span>
+          <div class="corner"></div>
+          <h3>Sociales</h3>
+          <p>Historia, geografía y civismo.</p>
+        </article>
+
+        <article class="card ingles" data-subject="Inglés" data-color="var(--lime)">
+          <span class="badge">+ recursos</span>
+          <div class="corner"></div>
+          <h3>Inglés</h3>
+          <p>Juegos, lectura y listening.</p>
+        </article>
+
+        <article class="card arte" data-subject="Arte" data-color="var(--orange)">
+          <span class="badge">+ recursos</span>
+          <div class="corner"></div>
+          <h3>Arte</h3>
+          <p>Dibujo, creatividad y museos.</p>
+        </article>
+
+        <article class="card musica" data-subject="Música" data-color="#9C7AE5">
+          <span class="badge">+ recursos</span>
+          <div class="corner"></div>
+          <h3>Música</h3>
+          <p>Teoría, práctica y composición.</p>
+        </article>
+      </section>
+
+      <!-- Folder flotante -->
+      <section id="folder" class="folder" aria-hidden="true">
+        <div id="folderBand" class="folder-top-curve"></div>
+        <div class="folder-header">
+          <div class="folder-title" id="folderTitle">Materia</div>
+          <div class="folder-level" id="folderLevel">Nivel</div>
+          <button class="folder-close" id="folderClose" title="Cerrar">✕</button>
+        </div>
+        <div class="resources" id="resources">
+          <!-- JS inyecta los recursos aquí -->
+        </div>
+      </section>
+
+      <div class="spacer"></div>
+    </main>
+  </div>
+
+  <script>
+    // ==== DATA DEMO ===========================================================
+    // Estructura: nivel -> materia -> [ {title, desc, url, tag(color)} ]
+    const DATA = {
+      preprimaria: {
+        "Matemáticas": {
+          web: [
+            { title: "ABCya", url: "http://abcya.com" },
+            { title: "Cool Math 4 Kids", url: "https://www.coolmath4kids.com/" },
+            { title: "IXL PreK", url: "https://la.ixl.com/matematicas" },
+            { title: "Khan Academy Kids", url: "https://learn.khanacademy.org/khan-academy-kids" },
+            { title: "Math Playground", url: "https://www.mathplayground.com/" },
+            { title: "PBS Kids – Math", url: "https://pbskids.org/games/math" },
+            { title: "PrimaryGames – Math", url: "https://www.primarygames.com/math/" },
+            { title: "SplashLearn PreK", url: "https://www.splashlearn.com/preschoolers" },
+            { title: "Starfall – Math", url: "https://www.starfall.com/h/index.php?mg=m" },
+            { title: "Toy Theater – Math", url: "https://toytheater.com/category/math-games/" }
+          ],
+          app: [
+            { title: "Bugs and Numbers", url: "https://littlebitstudio.com/bugsandnumbers/" },
+            { title: "Endless Numbers", url: "https://play.google.com/store/apps/details?id=com.originatorkids.EndlessNumbers" },
+            { title: "IXL", url: "https://la.ixl.com/matematicas" },
+            { title: "Math Kids", url: "https://play.google.com/store/apps/details?id=com.rvappstudios.math.kids.counting" },
+            { title: "Moose Math", url: "https://www.duckduckmoose.com/educational-iphone-itouch-apps-for-kids/moose-math/" },
+            { title: "Numberblocks: Hide and Seek", url: "https://play.google.com/store/apps/details?id=uk.co.bluezoo.numberblocks.game1" },
+            { title: "Numberblocks Hide & Seek (Softonic)", url: "https://numberblocks-hide-and-seek.en.softonic.com/android" },
+            { title: "SplashLearn Kids – Math", url: "https://www.splashlearn.com/preschoolers" },
+            { title: "Tiggly Addventure (reseña)", url: "https://www.commonsense.org/education/reviews/tiggly-addventure-number-line-math-learning-game-for-preschool" },
+            { title: "Todo Math", url: "https://play.google.com/store/apps/details?id=com.enuma.todomath&hl=es_GT" }
+          ]
+        },
+
+        "Ciencias Naturales": {
+          web: [
+            { title: "BBC Bitesize Science EYFS", url: "https://www.bbc.co.uk/bitesize/subjects/z3wnvj6" },
+            { title: "PBS – Programas (padres)", url: "https://www.pbs.org/es/parents/programas" },
+            { title: "SplashLearn PreK (ciencia listado)", url: "https://www.splashlearn.com/preschoolers" }
+          ],
+          app: [
+            { title: "Shifu (PlayShifu)", url: "https://play.google.com/store/apps/details?id=com.playshifu.app" },
+            { title: "Bibi Pet – Explorer", url: "https://play.google.com/store/apps/details?id=bibi.pet.games.explorer.home&hl=en" },
+            { title: "Curious World", url: "https://www.curiousworld.com/" },
+            { title: "Human Body by Tinybop", url: "https://play.google.com/store/apps/details?id=com.tinybop.TheHumanBodyFull" },
+            { title: "My Incredible Body (Soft112)", url: "https://my-incredible-body-guide-to-learn-about-the-human-body-for--ios.soft112.com/" },
+            { title: "PBS Kids – Science", url: "https://pbskids.org/games/science" },
+            { title: "Peekaboo Barn", url: "https://play.google.com/store/apps/details?id=com.bhhc.peekaboobarn&hl=es_GT" },
+            { title: "Science Journal (Google/ScienceBuddies)", url: "https://www.sciencebuddies.org/science-journal-app" },
+            { title: "Toca Lab: Plants (Softonic)", url: "https://toca-lab-plants.softonic.com/android" },
+            { title: "Toca Nature (AppTK)", url: "https://apptk.es/apps/toca-nature/" }
+          ]
+        },
+
+        "Español": {
+          web: [
+            { title: "Árbol ABC – Lecturas Cortas", url: "https://arbolabc.com/lecturas-cortas-para-ni%C3%B1os" },
+            { title: "Mundo Primaria – Lectoescritura", url: "https://www.mundoprimaria.com/fichas-infantil/fichas-lectoescritura" },
+            { title: "Pictotraductor", url: "https://www.pictotraductor.com/?fcb=2" },
+            { title: "Pipo Club", url: "https://www.pipoclub.com/" }
+          ],
+          app: [
+            { title: "Cursive Writing (Aptoide)", url: "https://best-kids-cursive-writing-abc.es.aptoide.com/app" },
+            { title: "ABCDinos", url: "https://play.google.com/store/apps/details?id=com.Didactoons.ABCDinos&hl=es_GT" },
+            { title: "Picture Spelling Lite", url: "https://play.google.com/store/apps/details?id=com.lescapadou.picturespellinglite&hl=es_GT" },
+            { title: "Endless Alphabet", url: "https://play.google.com/store/apps/details?id=com.originatorkids.EndlessAlphabet&hl=es_GT" },
+            { title: "Lecturas Árbol ABC", url: "https://arbolabc.com/lecturas-cortas-para-ni%C3%B1os" },
+            { title: "Lee Paso a Paso", url: "https://bqware.com/es/appesp/lee-paso-a-paso/" },
+            { title: "Leo con Grin", url: "https://play.google.com/store/apps/details?id=air.educaplanet.grin.leo1.full&hl=es_GT" },
+            { title: "Letras y Palabras", url: "https://play.google.com/store/apps/details?id=com.oki.alphabetnew&hl=es_GT" },
+            { title: "Silabando", url: "https://play.google.com/store/apps/details?id=com.appsbergman.silabando&hl=es_GT" },
+            { title: "Pipo Club", url: "https://www.pipoclub.com/" }
+          ]
+        },
+
+        "Ciencias Sociales": {
+          web: [
+            { title: "MINEDUC – Preprimaria", url: "https://aprendoencasayenclase.mineduc.gob.gt/index.php/preprimaria/" },
+            { title: "BBC Bitesize – EYFS", url: "https://www.bbc.co.uk/bitesize/levels/zt6svwx" },
+            { title: "World Geography Games (ES)", url: "https://world-geography-games.com/es/" },
+            { title: "History for Kids", url: "https://www.historyforkids.net/#google_vignette" },
+            { title: "CEPAL – Libros Interactivos (niñez)", url: "https://dds.cepal.org/redesoc/publicacion?id=2887" },
+            { title: "Mapas Interactivos (Didactalia)", url: "https://mapasinteractivos.didactalia.net/comunidad/mapasflashinteractivos" },
+            { title: "National Geographic Kids", url: "https://kids.nationalgeographic.com/" },
+            { title: "PBS Parents – Autores PBS Kids", url: "https://www.pbs.org/es/parents/autores/pbs-kids" },
+            { title: "Tate Kids", url: "https://www.tate.org.uk/kids" },
+            { title: "Time for Kids", url: "https://www.timeforkids.com/" }
+          ],
+          app: [
+            { title: "Barefoot World Atlas", url: "https://apps.apple.com/id/app/barefoot-world-atlas/id489221652" },
+            { title: "BrainPOP Jr.", url: "https://jr.brainpop.com/" },
+            { title: "Curious World", url: "https://www.curiousworld.com/" },
+            { title: "Duck Duck Moose – Neighborhood", url: "https://play.google.com/store/apps/details?id=com.duckduckmoosedesign.km" },
+            { title: "Geografía para Niños", url: "https://play.google.com/store/apps/details?id=com.kokotots.kidsgeography" },
+            { title: "Google Earth", url: "https://play.google.com/store/apps/details?id=com.google.earth&start=70&hl=es_419" },
+            { title: "History for Kids (iOS)", url: "https://apps.apple.com/us/app/history-for-kids-all-civilizations-learning-games/id1178034868" },
+            { title: "PBS Kids – All Topics", url: "https://pbskids.org/games/all-topics" },
+            { title: "Socratic (Softonic)", url: "https://socratic-by-google.softonic.com/android" },
+            { title: "Stack the States", url: "https://play.google.com/store/apps/details?id=com.freecloud.StackTheStates" }
+          ]
+        },
+
+        "Inglés": {
+          web: [
+            { title: "BrainPOP Jr.", url: "https://jr.brainpop.com/" },
+            { title: "ABCya PreK", url: "https://www.abcya.com/grades/prek" },
+            { title: "Curious World", url: "https://www.curiousworld.com/" },
+            { title: "PBS Kids – All Topics", url: "https://pbskids.org/games/all-topics" }
+          ],
+          app: [
+            { title: "ABCmouse", url: "https://play.google.com/store/apps/details?id=mobi.abcmouse.academy_goo&hl=es" },
+            { title: "Duolingo ABC", url: "https://abc.duolingo.com/" },
+            { title: "Endless Alphabet", url: "https://play.google.com/store/apps/details?id=com.originatorkids.EndlessAlphabet" },
+            { title: "Fun English – Studycat", url: "https://play.google.com/store/apps/details?id=sesa.suri.fun.English&hl=es_GT" },
+            { title: "Khan Academy Kids", url: "https://learn.khanacademy.org/khan-academy-kids" },
+            { title: "Google Earth", url: "https://play.google.com/store/apps/details?id=com.google.earth&start=70&hl=es_419" },
+            { title: "Monkey Junior", url: "https://play.google.com/store/apps/details?id=com.earlystart.android.monkeyjunior" },
+            { title: "Phonics Island", url: "https://play.google.com/store/apps/details?id=air.cz.cfc.androidgp.PhonicsIsland" },
+            { title: "Reading Eggs Junior", url: "https://readingeggsjunior.com.au/" },
+            { title: "Stack the States", url: "https://play.google.com/store/apps/details?id=com.freecloud.StackTheStates" }
+          ]
+        },
+
+        "Arte": {
+          web: [
+            { title: "Mundo Primaria – Colorear", url: "https://www.mundoprimaria.com/dibujos-para-colorear" },
+            { title: "PBS Kids – Art", url: "https://pbskids.org/games/art" },
+            { title: "Tate Paint (traducido)", url: "https://www-tate-org-uk.translate.goog/kids/games-quizzes/tate-paint?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=tc" },
+            { title: "Toy Theater – Art", url: "https://toytheater.com/category/create/art/" }
+          ],
+          app: [
+            { title: "Sgraffito", url: "https://play.google.com/store/apps/details?id=com.linhoapps.sgraffito&hl=es_GT" },
+            { title: "Colorfy", url: "https://play.google.com/store/apps/details?id=com.fungamesforfree.colorfy&hl=es_GT" },
+            { title: "Kids Coloring Book", url: "https://play.google.com/store/apps/details?id=com.rvappstudios.kids.coloring.book.color.painting" },
+            { title: "Crayola Create & Play", url: "https://www.crayolacreateandplay.com/" },
+            { title: "Drawing for Kids (iOS)", url: "https://apps.apple.com/us/app/drawing-for-kids-baby-games/id1001555097" },
+            { title: "Kids Doodle", url: "https://play.google.com/store/apps/details?id=com.doodlejoy.studio.kidsdoojoy" },
+            { title: "Paint Sparkles", url: "https://play.google.com/store/apps/details?id=com.tabtale.paintsparklesdraw" },
+            { title: "Pixel Art Coloring", url: "https://play.google.com/store/apps/details?id=com.europosit.pixelcoloring" },
+            { title: "Sketchbook", url: "https://play.google.com/store/apps/details?id=com.adsk.sketchbook&hl=es_GT" },
+            { title: "Tayasui Sketches", url: "https://play.google.com/store/apps/details?id=com.tayasui.sketches" }
+          ]
+        },
+
+        "Música": {
+          web: [
+            { title: "Chrome Music Lab", url: "https://musiclab.chromeexperiments.com/" },
+            { title: "Classics for Kids", url: "https://www.classicsforkids.com/" },
+            { title: "Hello Kids", url: "https://www.hellokids.com/" },
+            { title: "Incredibox", url: "https://www.incredibox.com/" },
+            { title: "Making Music Fun", url: "https://www.makingmusicfun.net/" },
+            { title: "PBS Kids – Music", url: "https://pbskids.org/games/music" },
+            { title: "San Francisco Symphony Kids", url: "https://www.sfskids.org/" },
+            { title: "SolFaMix", url: "https://www.solfamix.com/" },
+            { title: "Soundation", url: "https://soundation.com/" },
+            { title: "Teoria.com", url: "https://www.teoria.com/" },
+            { title: "Whack-a-Note", url: "https://www.whackanote.com/" },
+            { title: "TonedEar", url: "https://tonedear.com/" }
+          ],
+          app: [
+            { title: "Music Sparkles (iOS)", url: "https://apps.apple.com/us/app/music-sparkles/id452584114" },
+            { title: "Music Tutor", url: "https://play.google.com/store/apps/details?id=com.jsplash.musictutor&hl=es_GT" },
+            { title: "Perfect Ear", url: "https://www.perfectear.app/" },
+            { title: "Piano Kids", url: "https://play.google.com/store/apps/details?id=com.orange.kidspiano.music.songs&hl=es_GT&pli=1" },
+            { title: "Song Maker (CML)", url: "https://musiclab.chromeexperiments.com/Song-Maker" },
+            { title: "Soundtrap for Education", url: "https://www.soundtrap.com/edu/" },
+            { title: "Toca Boca – Kids", url: "https://www.tocaboca.com/kids" },
+            { title: "Piano Perfect", url: "https://play.google.com/store/apps/details?id=com.gamestar.pianoperfect&hl=es_GT" },
+            { title: "Yousician (LP)", url: "https://yousician.com/lp/yousician" }
+          ]
+        }
+      },
+
+      primaria: {
+        "Matemáticas": {
+          web: [
+            { title: "ABCya", url: "https://www.abcya.com/" },
+            { title: "Brilliant", url: "https://brilliant.org/" },
+            { title: "Cool Math 4 Kids", url: "https://www.coolmath4kids.com/" },
+            { title: "IXL", url: "https://www.ixl.com/" },
+            { title: "Desmos", url: "https://www.desmos.com/" },
+            { title: "Khan Academy", url: "https://es.khanacademy.org/" },
+            { title: "GeoGebra", url: "https://www.geogebra.org/" },
+            { title: "BBC Bitesize KS1", url: "https://www.bbc.co.uk/bitesize/subjects/zjxhfg8" },
+            { title: "Math Is Fun", url: "https://www.mathsisfun.com/" },
+            { title: "Math Playground", url: "https://www.mathplayground.com/" },
+            { title: "Mathway (web)", url: "https://www.mathway.com/" },
+            { title: "SplashLearn", url: "https://www.splashlearn.com/" },
+            { title: "Symbolab (web)", url: "https://www.symbolab.com/" },
+            { title: "ThatQuiz", url: "https://www.thatquiz.org/" },
+            { title: "Wolfram Alpha (web)", url: "https://www.wolframalpha.com/" }
+          ],
+          app: [
+            { title: "CoolMath Games", url: "https://www.coolmathgames.com/" },
+            { title: "Brilliant", url: "https://brilliant.org/" },
+            { title: "Desmos", url: "https://www.desmos.com/" },
+            { title: "Khan Academy", url: "https://es.khanacademy.org/" },
+            { title: "GeoGebra", url: "https://www.geogebra.org/" },
+            { title: "Mathway (Android)", url: "https://play.google.com/store/apps/details?id=com.mathway.android" },
+            { title: "Symbolab (Android)", url: "https://play.google.com/store/apps/details?id=com.devsense.symbolab" },
+            { title: "Wolfram Alpha (web)", url: "https://www.wolframalpha.com/" }
+          ]
+        },
+
+        "Ciencias Naturales": {
+          web: [
+            { title: "BBC Bitesize Science KS1/KS2", url: "https://www.bbc.co.uk/bitesize/subjects/z2j2n39" },
+            { title: "CK-12", url: "https://www.ck12.org/" },
+            { title: "Exploratorium", url: "https://www.exploratorium.edu/" },
+            { title: "ChemCollective", url: "http://chemcollective.org/" },
+            { title: "Mystery Science", url: "https://mysteryscience.com/" },
+            { title: "NASA Space Place", url: "https://spaceplace.nasa.gov/" },
+            { title: "National Geographic Kids", url: "https://kids.nationalgeographic.com/" },
+            { title: "HowStuffWorks", url: "https://www.howstuffworks.com/" },
+            { title: "NASA Climate Kids", url: "https://climatekids.nasa.gov/" },
+            { title: "Science Kids", url: "https://www.sciencekids.co.nz/" },
+            { title: "SwitchZoo", url: "https://www.switchzoo.com/" },
+            { title: "Periodic Videos", url: "https://www.periodicvideos.com/" },
+            { title: "Tinybop (site)", url: "https://tinybop.com/" }
+          ],
+          app: [
+            { title: "PlayShifu", url: "https://play.google.com/store/apps/details?id=com.playshifu.app" },
+            { title: "Bibi Pet – Animals", url: "https://play.google.com/store/apps/details?id=com.bibipet.animals" },
+            { title: "Curious World", url: "https://www.curiousworld.com/" },
+            { title: "Human Body by Tinybop", url: "https://play.google.com/store/apps/details?id=com.tinybop.TheHumanBodyFull" },
+            { title: "My Incredible Body", url: "https://my-incredible-body.soft112.com/" },
+            { title: "PBS Kids – Science", url: "https://pbskids.org/games/science" },
+            { title: "Peekaboo Barn", url: "https://play.google.com/store/apps/details?id=com.bhhc.peekaboobarn" },
+            { title: "Science Journal (app info)", url: "https://www.sciencebuddies.org/science-journal-app" },
+            { title: "Toca Lab: Plants", url: "https://toca-lab-plants.softonic.com/" },
+            { title: "Toca Nature", url: "https://apptk.es/apps/toca-nature/" }
+          ]
+        },
+
+        "Español": {
+          web: [
+            { title: "Cuadernos Rubio", url: "https://www.rubio.net/" },
+            { title: "Didactalia", url: "https://didactalia.net/" },
+            { title: "EducaPeques", url: "https://www.educapeques.com/" },
+            { title: "Santillana GT", url: "https://santillana.com.gt/" },
+            { title: "Educima", url: "https://www.educima.com/" },
+            { title: "El Abuelo Educador", url: "https://elabueloeducador.com/" },
+            { title: "Interpeques (Lecturas)", url: "https://interpeques2.com/" },
+            { title: "Fundéu RAE", url: "https://www.fundeu.es/" },
+            { title: "El Huevo de Chocolate", url: "https://www.elhuevodechocolate.com/" },
+            { title: "El Castellano", url: "https://www.elcastellano.org/" },
+            { title: "Liveworksheets", url: "https://www.liveworksheets.com/" },
+            { title: "Lenguaviva", url: "https://lenguaviva.net/" },
+            { title: "Ortografía Fácil", url: "https://ortografiafacil.com/" },
+            { title: "Pictotraductor", url: "https://www.pictotraductor.com/" },
+            { title: "Ortografía.com", url: "https://www.ortografia.com/" },
+            { title: "Pipo Club", url: "https://www.pipoclub.com/" },
+            { title: "ProfeDeELE", url: "https://www.profedeele.es/" }
+          ],
+          app: [
+            { title: "Cursive Writing", url: "https://play.google.com/store/apps/details?id=com.cursive.writing" },
+            { title: "ABCDinos", url: "https://play.google.com/store/apps/details?id=com.Didactoons.ABCDinos" },
+            { title: "Picture Spelling Lite", url: "https://play.google.com/store/apps/details?id=com.lescapadou.picturespellinglite" },
+            { title: "Endless Alphabet", url: "https://play.google.com/store/apps/details?id=com.originatorkids.EndlessAlphabet" },
+            { title: "Lecturas Árbol ABC", url: "https://arbolabc.com/lecturas-cortas-para-ni%C3%B1os" },
+            { title: "Lee Paso a Paso", url: "https://bqware.com/es/appesp/lee-paso-a-paso/" },
+            { title: "Leo con Grin", url: "https://play.google.com/store/apps/details?id=air.educaplanet.grin.leo1.full" },
+            { title: "Letras y Palabras", url: "https://play.google.com/store/apps/details?id=com.oki.alphabetnew" },
+            { title: "Silabando", url: "https://play.google.com/store/apps/details?id=com.appsbergman.silabando" },
+            { title: "Pipo Club", url: "https://www.pipoclub.com/" }
+          ]
+        },
+
+        "Ciencias Sociales": {
+          web: [
+            { title: "BBC Bitesize – Subjects", url: "https://www.bbc.co.uk/bitesize/subjects/" },
+            { title: "MINEDUC Portal", url: "https://aprendoencasayenclase.mineduc.gob.gt/" },
+            { title: "World Geography Games", url: "https://world-geography-games.com/es/" },
+            { title: "History for Kids", url: "https://www.historyforkids.net/" },
+            { title: "CEPAL – Publicación", url: "https://dds.cepal.org/redesoc/publicacion" },
+            { title: "Mapas Interactivos", url: "https://mapasinteractivos.didactalia.net/" },
+            { title: "National Geographic Kids", url: "https://kids.nationalgeographic.com/" },
+            { title: "PBS Parents", url: "https://www.pbs.org/es/parents/" },
+            { title: "Tate Kids", url: "https://www.tate.org.uk/kids" },
+            { title: "Time for Kids", url: "https://www.timeforkids.com/" }
+          ],
+          app: [
+            { title: "Barefoot World Atlas", url: "https://apps.apple.com/id/app/barefoot-world-atlas/id489221652" },
+            { title: "BrainPOP Jr.", url: "https://jr.brainpop.com/" },
+            { title: "Curious World", url: "https://www.curiousworld.com/" },
+            { title: "Neighborhood (DDM)", url: "https://play.google.com/store/apps/details?id=com.duckduckmoosedesign.km" },
+            { title: "Kids Geography Quiz", url: "https://play.google.com/store/apps/details?id=com.kokotots.kidsgeography" },
+            { title: "Google Earth", url: "https://play.google.com/store/apps/details?id=com.google.earth" },
+            { title: "History for Kids (iOS)", url: "https://apps.apple.com/us/app/history-for-kids/id1178034868" },
+            { title: "PBS Kids – All Topics", url: "https://pbskids.org/games/all-topics" },
+            { title: "Socratic (Softonic)", url: "https://socratic-by-google.softonic.com/android" },
+            { title: "Stack the States", url: "https://play.google.com/store/apps/details?id=com.freecloud.StackTheStates" }
+          ]
+        },
+
+        "Inglés": {
+          web: [
+            { title: "ABCya", url: "https://www.abcya.com/" },
+            { title: "Breaking News English", url: "https://breakingnewsenglish.com/" },
+            { title: "Epic! Books", url: "https://www.getepic.com/" },
+            { title: "Fun English Games", url: "https://www.funenglishgames.com/" },
+            { title: "ESL Games Plus", url: "https://www.eslgamesplus.com/" },
+            { title: "Lingokids (web)", url: "https://www.lingokids.com/" },
+            { title: "Highlights Kids", url: "https://www.highlightskids.com/" },
+            { title: "ESL Lab", url: "https://www.esl-lab.com/" },
+            { title: "Khan – Grammar", url: "https://www.khanacademy.org/humanities/grammar" },
+            { title: "Reading Rockets", url: "https://www.readingrockets.org/" },
+            { title: "LyricsTraining", url: "https://lyricstraining.com/" },
+            { title: "Starfall", url: "https://www.starfall.com/" },
+            { title: "Storyberries", url: "https://www.storyberries.com/" }
+          ],
+          app: [
+            { title: "ABCmouse", url: "https://play.google.com/store/apps/details?id=mobi.abcmouse.academy_goo" },
+            { title: "Duolingo ABC", url: "https://abc.duolingo.com/" },
+            { title: "Endless Alphabet", url: "https://play.google.com/store/apps/details?id=com.originatorkids.EndlessAlphabet" },
+            { title: "Fun English – Studycat", url: "https://play.google.com/store/apps/details?id=sesa.suri.fun.English" },
+            { title: "Khan Academy Kids", url: "https://learn.khanacademy.org/khan-academy-kids" },
+            { title: "Google Earth", url: "https://play.google.com/store/apps/details?id=com.google.earth" },
+            { title: "Monkey Junior", url: "https://play.google.com/store/apps/details?id=com.earlystart.android.monkeyjunior" },
+            { title: "Phonics Island", url: "https://play.google.com/store/apps/details?id=air.cz.cfc.androidgp.PhonicsIsland" },
+            { title: "Reading Eggs Junior", url: "https://readingeggsjunior.com.au/" },
+            { title: "Stack the States", url: "https://play.google.com/store/apps/details?id=com.freecloud.StackTheStates" }
+          ]
+        },
+
+        "Arte": {
+          web: [
+            { title: "Art for Kids Hub", url: "https://www.artforkidshub.com/" },
+            { title: "Adobe Education", url: "https://edex.adobe.com/" },
+            { title: "Coloring.ws", url: "https://www.coloring.ws/" },
+            { title: "Artsonia", url: "https://www.artsonia.com/" },
+            { title: "Deep Space Sparkle", url: "https://www.deepspacesparkle.com/" },
+            { title: "HelloKids", url: "https://www.hellokids.com/" },
+            { title: "Google Arts & Culture", url: "https://artsandculture.google.com/" },
+            { title: "KinderArt", url: "https://kinderart.com/" },
+            { title: "Museo del Prado", url: "https://www.museodelprado.es/" },
+            { title: "National Gallery", url: "https://www.nationalgallery.org.uk/" }
+          ],
+          app: [
+            { title: "Sgraffito", url: "https://play.google.com/store/apps/details?id=com.linhoapps.sgraffito" },
+            { title: "Colorfy", url: "https://play.google.com/store/apps/details?id=com.fungamesforfree.colorfy" },
+            { title: "Kids Coloring Book", url: "https://play.google.com/store/apps/details?id=com.rvappstudios.kids.coloring.book.color.painting" },
+            { title: "Crayola Create & Play", url: "https://www.crayolacreateandplay.com/" },
+            { title: "Drawing for Kids (iOS)", url: "https://apps.apple.com/us/app/drawing-for-kids-baby-games/id1001555097" },
+            { title: "Kids Doodle", url: "https://play.google.com/store/apps/details?id=com.doodlejoy.studio.kidsdoojoy" },
+            { title: "Paint Sparkles", url: "https://play.google.com/store/apps/details?id=com.tabtale.paintsparklesdraw" },
+            { title: "Pixel Art Coloring", url: "https://play.google.com/store/apps/details?id=com.europosit.pixelcoloring" },
+            { title: "Sketchbook", url: "https://play.google.com/store/apps/details?id=com.adsk.sketchbook" },
+            { title: "Tayasui Sketches", url: "https://play.google.com/store/apps/details?id=com.tayasui.sketches" }
+          ]
+        },
+
+        "Música": {
+          web: [
+            { title: "Chrome Music Lab", url: "https://musiclab.chromeexperiments.com/" },
+            { title: "Classics for Kids", url: "https://www.classicsforkids.com/" },
+            { title: "HelloKids", url: "https://www.hellokids.com/" },
+            { title: "Incredibox", url: "https://www.incredibox.com/" },
+            { title: "Making Music Fun", url: "https://www.makingmusicfun.net/" },
+            { title: "PBS Kids – Music", url: "https://pbskids.org/games/music" },
+            { title: "SFS Kids", url: "https://www.sfskids.org/" },
+            { title: "SolFaMix", url: "https://www.solfamix.com/" },
+            { title: "Soundation", url: "https://soundation.com/" },
+            { title: "Teoria.com", url: "https://www.teoria.com/" },
+            { title: "Whack-a-Note", url: "https://www.whackanote.com/" },
+            { title: "TonedEar", url: "https://tonedear.com/" }
+          ],
+          app: [
+            { title: "Music Sparkles (iOS)", url: "https://apps.apple.com/us/app/music-sparkles/id452584114" },
+            { title: "Music Tutor", url: "https://play.google.com/store/apps/details?id=com.jsplash.musictutor" },
+            { title: "Perfect Ear", url: "https://www.perfectear.app/" },
+            { title: "Piano Kids", url: "https://play.google.com/store/apps/details?id=com.orange.kidspiano.music.songs" },
+            { title: "Song Maker (CML)", url: "https://musiclab.chromeexperiments.com/Song-Maker" },
+            { title: "Soundtrap EDU", url: "https://www.soundtrap.com/edu/" },
+            { title: "Toca Boca – Kids", url: "https://www.tocaboca.com/kids" },
+            { title: "Piano Perfect", url: "https://play.google.com/store/apps/details?id=com.gamestar.pianoperfect" },
+            { title: "Yousician (LP)", url: "https://yousician.com/lp/yousician" }
+          ]
+        }
+      },
+
+      basicos: {
+        "Matemáticas": {
+          web: [
+            { title: "CK-12", url: "https://www.ck12.org/" },
+            { title: "Desmos", url: "https://www.desmos.com/" },
+            { title: "GeoGebra", url: "https://www.geogebra.org/" },
+            { title: "Khan Academy – Math", url: "https://es.khanacademy.org/math" },
+            { title: "Math Is Fun – Álgebra", url: "https://www.mathsisfun.com/algebra/" },
+            { title: "Mathway (web)", url: "https://www.mathway.com/" },
+            { title: "Symbolab (web)", url: "https://www.symbolab.com/" },
+            { title: "ThatQuiz", url: "https://www.thatquiz.org/" },
+            { title: "Wolfram Alpha", url: "https://www.wolframalpha.com/" }
+          ],
+          app: [
+            { title: "Desmos", url: "https://www.desmos.com/" },
+            { title: "GeoGebra", url: "https://www.geogebra.org/" },
+            { title: "Khan Academy – Math", url: "https://es.khanacademy.org/math" },
+            { title: "Mathway (Android)", url: "https://play.google.com/store/apps/details?id=com.mathway.android" },
+            { title: "Symbolab (Android)", url: "https://play.google.com/store/apps/details?id=com.devsense.symbolab" },
+            { title: "Wolfram Alpha (web)", url: "https://www.wolframalpha.com/" }
+          ]
+        },
+
+        "Ciencias Naturales": {
+          web: [
+            { title: "BioMan Biology", url: "https://www.biomanbio.com/" },
+            { title: "ChemCollective", url: "http://chemcollective.org/" },
+            { title: "CK-12", url: "https://www.ck12.org/" },
+            { title: "NASA Space Place", url: "https://spaceplace.nasa.gov/" },
+            { title: "MIT BLOSSOMS", url: "https://blossoms.mit.edu/" },
+            { title: "NatGeo – Science", url: "https://www.nationalgeographic.com/science" },
+            { title: "Periodic Videos", url: "https://www.periodicvideos.com/" },
+            { title: "PhET", url: "https://phet.colorado.edu/" }
+          ],
+          app: [
+            { title: "Complete Biology", url: "https://play.google.com/store/apps/details?id=org.vertebratecompletebiology" },
+            { title: "Complete Chemistry", url: "https://play.google.com/store/apps/details?id=org.vertebratechemistry" },
+            { title: "PhET Android App", url: "https://play.google.com/store/apps/details?id=com.phet.android" },
+            { title: "Quizlet", url: "https://play.google.com/store/apps/details?id=org.quizlet.quizletandroid" }
+          ]
+        },
+
+        "Español": {
+          web: [
+            { title: "Didactalia", url: "https://didactalia.net/" },
+            { title: "Santillana GT", url: "https://santillana.com.gt/" },
+            { title: "El Huevo de Chocolate", url: "https://www.elhuevodechocolate.com/" },
+            { title: "El Castellano", url: "https://www.elcastellano.org/" },
+            { title: "Liveworksheets", url: "https://www.liveworksheets.com/" },
+            { title: "Lenguaviva", url: "https://lenguaviva.net/" },
+            { title: "Ortografía Fácil", url: "https://ortografiafacil.com/" },
+            { title: "Ortografia.com", url: "https://www.ortografia.com/" },
+            { title: "ProfeDeELE", url: "https://www.profedeele.es/" }
+          ],
+          app: [
+            { title: "WordReference", url: "https://play.google.com/store/apps/details?id=com.wordreference" },
+            { title: "RAE (App)", url: "https://play.google.com/store/apps/details?id=com.rae" }
+          ]
+        },
+
+        "Ciencias Sociales": {
+          web: [
+            { title: "BBC Bitesize", url: "https://www.bbc.co.uk/bitesize/" },
+            { title: "Khan – History", url: "https://es.khanacademy.org/humanities/history" },
+            { title: "NatGeo Kids", url: "https://kids.nationalgeographic.com/" },
+            { title: "TimeMaps", url: "https://www.timemaps.com/" },
+            { title: "Time for Kids", url: "https://www.timeforkids.com/" },
+            { title: "UN Youth", url: "https://www.un.org/youthenvoy/resources/" },
+            { title: "World Geography Games", url: "https://world-geography-games.com/" }
+          ],
+          app: [
+            { title: "Google Earth", url: "https://play.google.com/store/apps/details?id=com.google.earth" },
+            { title: "Quizlet", url: "https://play.google.com/store/apps/details?id=org.quizlet.quizletandroid" },
+            { title: "TIME Timeline", url: "https://play.google.com/store/apps/details?id=com.timedotcom.timeline" },
+            { title: "UNESCO World Heritage", url: "https://play.google.com/store/apps/details?id=com.unesco.whc" }
+          ]
+        },
+
+        "Inglés": {
+          web: [
+            { title: "BBC Learning English", url: "https://www.bbc.co.uk/learningenglish/" },
+            { title: "British Council – English", url: "https://www.britishcouncil.org/school-resources/find/subject/english" },
+            { title: "Breaking News English", url: "https://breakingnewsenglish.com/" },
+            { title: "Duolingo Web", url: "https://www.duolingo.com/" },
+            { title: "ESL Games Plus", url: "https://www.eslgamesplus.com/" },
+            { title: "ESL Lab", url: "https://www.esl-lab.com/" },
+            { title: "Khan – Grammar", url: "https://www.khanacademy.org/humanities/grammar" },
+            { title: "LyricsTraining", url: "https://lyricstraining.com/" },
+            { title: "Storyberries", url: "https://www.storyberries.com/" },
+            { title: "VOA Learning English", url: "https://learningenglish.voanews.com/" }
+          ],
+          app: [
+            { title: "Busuu", url: "https://play.google.com/store/apps/details?id=com.busuu.android.enc" },
+            { title: "Elevate", url: "https://play.google.com/store/apps/details?id=com.elevateapp" },
+            { title: "LingQ", url: "https://play.google.com/store/apps/details?id=com.lingq.mobile" }
+          ]
+        },
+
+        "Arte": {
+          web: [
+            { title: "Adobe Education", url: "https://edex.adobe.com/" },
+            { title: "Artsonia", url: "https://www.artsonia.com/" },
+            { title: "Google Arts & Culture", url: "https://artsandculture.google.com/" },
+            { title: "MoMA Learning", url: "https://www.moma.org/learn" },
+            { title: "Museo del Prado", url: "https://www.museodelprado.es/" },
+            { title: "National Gallery", url: "https://www.nationalgallery.org.uk/" }
+          ],
+          app: [
+            { title: "Sketchbook", url: "https://play.google.com/store/apps/details?id=com.adsk.sketchbook" },
+            { title: "Infinite Painter", url: "https://play.google.com/store/apps/details?id=com.brakefield.painter" },
+            { title: "Pigment (Pixite)", url: "https://play.google.com/store/apps/details?id=com.pixite.color" }
+          ]
+        },
+
+        "Música": {
+          web: [
+            { title: "Ableton Learning Music", url: "https://learningmusic.ableton.com/" },
+            { title: "Classics for Kids", url: "https://www.classicsforkids.com/" },
+            { title: "Hooktheory", url: "https://www.hooktheory.com/" },
+            { title: "MuseScore (scores)", url: "https://musescore.com/" },
+            { title: "MusicTheory.net", url: "https://www.musictheory.net/" },
+            { title: "Soundation", url: "https://soundation.com/" },
+            { title: "Teoria.com", url: "https://www.teoria.com/" },
+            { title: "TonedEar", url: "https://tonedear.com/" }
+          ],
+          app: [
+            { title: "MuseScore Player", url: "https://play.google.com/store/apps/details?id=com.musescore.playerlite" },
+            { title: "EarMaster", url: "https://play.google.com/store/apps/details?id=com.earmaster.emapp" },
+            { title: "Yousician", url: "https://play.google.com/store/apps/details?id=com.yousician.yousician" }
+          ]
+        }
+      }
+    };
+
+    // Mapa simple de tag -> color para el badge de cada recurso
+    const TAG_COLORS = {
+      blue: "var(--blue)",
+      teal: "var(--teal)",
+      gold: "var(--gold)",
+      pink: "var(--pink-strong)",
+      orange: "var(--orange)",
+      lime: "var(--lime)"
+    };
+
+    // ==== UI LOGIC ============================================================
+    let currentLevel = 'preprimaria';
+
+    const levelButtons = document.querySelectorAll('.level-btn');
+    const folder = document.getElementById('folder');
+    const folderBand = document.getElementById('folderBand');
+    const folderTitle = document.getElementById('folderTitle');
+    const folderLevel = document.getElementById('folderLevel');
+    const resourcesWrap = document.getElementById('resources');
+    const closeBtn = document.getElementById('folderClose');
+
+    levelButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        levelButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentLevel = btn.dataset.level;
+        // si hay folder abierto, refrescar contenido a ese nivel
+        if (!folder.classList.contains('open')) return;
+        const subject = folderTitle.dataset.subject;
+        openFolder(subject, folderBand.dataset.baseColor);
+      });
+    });
+
+    // Al hacer clic en una card de materia -> abrir folder
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        const subject = card.dataset.subject;
+        openFolder(subject, card.dataset.color);
+      });
+    });
+
+    function openFolder(subject, colorVar) {
+      // Colores del folder según la card
+      const strongColor = resolveColor(colorVar);
+      folder.style.setProperty('--folder-header', strongColor);                 // pestaña superior (fuerte)
+      folder.style.setProperty('--folder-bg', hexWithAlpha(strongColor, .85));  // fondo suave
+      folderBand.style.background = strongColor;                                // banda visible
+      folderBand.dataset.baseColor = colorVar;
+
+      // Títulos
+      folderTitle.textContent = subject;
+      folderTitle.dataset.subject = subject;
+      folderLevel.textContent = labelLevel(currentLevel);
+
+      // Render de recursos
+      resourcesWrap.innerHTML = '';
+      const groups = DATA[currentLevel]?.[subject];
+
+      if (!groups) {
+        resourcesWrap.innerHTML = `<div style="padding:12px;color:var(--muted)">No hay recursos para esta materia en este nivel.</div>`;
+      } else {
+        // aplanar {web, app} -> array
+        const list = [
+          ...(groups.web || []).map(r => ({ ...r, tipo: 'web' })),
+          ...(groups.app || []).map(r => ({ ...r, tipo: 'app' })),
+        ];
+
+        if (list.length === 0) {
+          resourcesWrap.innerHTML = `<div style="padding:12px;color:var(--muted)">No hay recursos para esta materia en este nivel.</div>`;
+        } else {
+          list.forEach(({ title, url, tipo }) => {
+            const card = document.createElement('div');
+            card.className = 'resource';
+            const iconBg = hexWithAlpha(strongColor, .12);
+            card.innerHTML = `
+              <div class="icon" style="background:${iconBg}; color:${strongColor}">🔗</div>
+              <div>
+                <h4>${title}</h4>
+                <p>${tipo === 'web' ? 'Sitio web' : 'Aplicación'}</p>
+                <a href="${url}" target="_blank" rel="noopener">Ir al recurso ↗</a>
+              </div>
+            `;
+            resourcesWrap.appendChild(card);
+          });
+        }
+      }
+
+      folder.classList.add('open');
+      folder.setAttribute('aria-hidden', 'false');
+    }
+
+    function resolveColor(cssVar) {
+      if (!cssVar) return 'var(--paper)';
+      if (cssVar.startsWith('var')) return getComputedStyle(document.documentElement).getPropertyValue(cssVar.slice(4, -1)).trim() || '#ccc';
+      return cssVar;
+    }
+
+    function labelLevel(key) {
+      return key === 'preprimaria' ? 'Preprimaria (3–5 años)'
+        : key === 'primaria' ? 'Primaria (6–11 años)'
+          : 'Básicos y Diversificado (12–18 años)';
+    }
+
+    function hexWithAlpha(color, a = .15) {
+      // admite var(--color) o hex
+      if (color.startsWith('var')) color = resolveColor(color);
+      // si ya es rgb(a)
+      if (color.startsWith('rgb')) return color.replace('rgb', 'rgba').replace(')', `, ${a})`);
+      // hex simple
+      const c = color.replace('#', '');
+      const bigint = parseInt(c.length === 3 ? c.split('').map(x => x + x).join('') : c, 16);
+      const r = (bigint >> 16) & 255, g = (bigint >> 8) & 255, b = bigint & 255;
+      return `rgba(${r},${g},${b},${a})`;
+    }
+
+    closeBtn.addEventListener('click', () => {
+      folder.classList.remove('open');
+      folder.setAttribute('aria-hidden', 'true');
+    });
+
+    // Cerrar si se hace click fuera del folder
+    document.addEventListener('click', (e) => {
+      if (!folder.classList.contains('open')) return;
+      const inside = folder.contains(e.target) || e.target.closest('.card') || e.target.closest('.level-btn');
+      if (!inside) {
+        folder.classList.remove('open');
+        folder.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+  </script>
+</body>
+
+</html>
